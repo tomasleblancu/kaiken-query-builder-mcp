@@ -39,7 +39,7 @@ brew install git python@3.11 uv visual-studio-code
 
 # 3. Crear carpeta dev y clonar el repositorio
 cd ~ && mkdir -p dev && cd dev
-git clone git@github.com:tomasleblancu/kaiken-query-builder-mcp.git
+git clone https://github.com/tomasleblancu/kaiken-query-builder-mcp.git
 cd kaiken-query-builder-mcp
 
 # 4. Instalar dependencias del proyecto
@@ -89,11 +89,18 @@ winget install --id Microsoft.VisualStudioCode -e
 **PASO 2: Clonar y configurar** (copia estos comandos en el PowerShell nuevo):
 
 ```powershell
-# Crear carpeta dev y clonar el repositorio
+# Ir a carpeta home y crear carpeta dev
 cd ~
-if (-not (Test-Path dev)) { mkdir dev }
+if (-not (Test-Path dev)) { New-Item -ItemType Directory -Name dev }
 cd dev
-git clone git@github.com:tomasleblancu/kaiken-query-builder-mcp.git
+
+# Clonar el repositorio (si falla, el script se detiene)
+git clone https://github.com/tomasleblancu/kaiken-query-builder-mcp.git
+if (-not (Test-Path kaiken-query-builder-mcp)) {
+    Write-Host "ERROR: No se pudo clonar el repositorio. Verifica tu conexión a Internet." -ForegroundColor Red
+    exit
+}
+
 cd kaiken-query-builder-mcp
 
 # Instalar dependencias del proyecto
