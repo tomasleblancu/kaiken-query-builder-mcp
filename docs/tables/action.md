@@ -1,0 +1,52 @@
+# action
+
+> **Tipo:** Tabla
+
+## Descripción
+
+Tabla de datos del sistema
+
+## Estadísticas
+
+- **Filas aproximadas:** 144
+- **Columnas:** 5
+
+## Columnas
+
+| Columna | Tipo | Nulo | Key | Default | Extra | Descripción |
+|---------|------|------|-----|---------|-------|-------------|
+| `idAction` | int | NO | 🔑 PK | `-` | auto_increment | - |
+| `idModule` | int | NO | 🔗 FK | `-` |  | - |
+| `identificator` | varchar(1000) | NO |  | `-` |  | - |
+| `type` | varchar(1000) | NO |  | `-` |  | - |
+| `description` | varchar(100) | YES |  | `-` |  | - |
+
+### Clave Primaria
+
+- `idAction`
+
+## Relaciones (Foreign Keys)
+
+| Columna | Tabla Referenciada | Columna Referenciada | Constraint |
+|---------|-------------------|---------------------|------------|
+| `idModule` | [module](module.md) | `idModule` | fk_action_module |
+
+## Tablas que referencian a esta
+
+| Tabla | Columna | Constraint |
+|-------|---------|------------|
+| [usersAction](usersAction.md) | `idAction` | fk_accesss_action |
+
+## Índices
+
+| Nombre | Tipo | Columnas |
+|--------|------|----------|
+| fk_action_module | INDEX | `idModule` |
+
+## Notas
+
+- **Auto-increment:** `idAction`
+
+---
+
+[← Volver al índice de tablas](../tables.md)

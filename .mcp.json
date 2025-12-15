@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "kaiken-query-builder": {
+      "command": "uv",
+      "args": ["--directory", "mcp", "run", "mcp_server.py"]
+    }
+  }
+}
