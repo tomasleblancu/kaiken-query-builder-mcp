@@ -1,0 +1,9 @@
+[project]
+name = "kaiken-mcp"
+version = "0.1.0"
+description = "MCP Server para Query Builder - Kaiken Lab"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.23.3",
+]
