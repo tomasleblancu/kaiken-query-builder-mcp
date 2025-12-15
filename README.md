@@ -84,7 +84,7 @@ winget install --id Microsoft.VisualStudioCode -e
 # 3. IMPORTANTE: Cerrar y volver a abrir PowerShell para que los comandos funcionen
 
 # 4. Crear carpeta dev y clonar el repositorio
-cd ~ ; mkdir dev ; cd dev
+cd ~ ; mkdir -Force dev ; cd dev
 git clone git@github.com:tomasleblancu/kaiken-query-builder-mcp.git
 cd kaiken-query-builder-mcp
 
