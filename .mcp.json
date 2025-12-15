@@ -2,7 +2,10 @@
   "mcpServers": {
     "kaiken-query-builder": {
       "command": "uv",
-      "args": ["--directory", "mcp", "run", "mcp_server.py"]
+      "args": ["--directory", "mcp", "run", "mcp_server.py"],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      }
     }
   }
 }

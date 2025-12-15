@@ -309,9 +309,12 @@ La base de datos tiene **275 tablas**. Cada tabla está documentada en [`docs/ta
 
 ---
 
-### 🪟 Problema en Windows: MCP Server no encuentra el .env
+### 🪟 Problema en Windows: MCP Server no funciona
 
-**Causa:** El archivo `.env` existe pero no se carga correctamente en Windows.
+**Causas comunes:**
+1. Dependencias faltantes (`python-dotenv`, `httpx`)
+2. El archivo `.env` no se carga correctamente
+3. Problemas de codificación UTF-8
 
 **Diagnóstico:**
 
@@ -322,7 +325,28 @@ cd mcp
 python test_env.py
 ```
 
-**Soluciones comunes:**
+**Soluciones:**
+
+**1. Reinstalar dependencias (IMPORTANTE):**
+   ```powershell
+   # Desde la raíz del proyecto
+   cd mcp
+   uv sync
+   cd ..
+   ```
+
+**2. Usar configuración alternativa para Windows:**
+   ```powershell
+   # Renombrar el .mcp.json original
+   Rename-Item .mcp.json .mcp.json.backup
+
+   # Usar la configuración de Windows
+   Copy-Item .mcp.windows.json .mcp.json
+
+   # Reiniciar Claude Code
+   ```
+
+**Otras soluciones comunes:**
 
 1. **Verificar codificación del archivo:**
    ```powershell

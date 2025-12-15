@@ -184,8 +184,8 @@ async def handle_call_tool(
         if result.get('success'):
             if 'data' in result:
                 data = result['data']
-                output = f"✅ Query ejecutada exitosamente\n"
-                output += f"📊 Filas retornadas: {len(data)}\n\n"
+                output = f"Query ejecutada exitosamente\n"
+                output += f"Filas retornadas: {len(data)}\n\n"
 
                 if len(data) > 0:
                     # Limitar resultados mostrados
@@ -198,9 +198,9 @@ async def handle_call_tool(
                 else:
                     output += "No se encontraron resultados"
             else:
-                output = f"✅ {result.get('message', 'Query ejecutada')}"
+                output = f"{result.get('message', 'Query ejecutada')}"
         else:
-            output = f"❌ Error: {result.get('error', 'Error desconocido')}"
+            output = f"Error: {result.get('error', 'Error desconocido')}"
 
         return [types.TextContent(type="text", text=output)]
 
@@ -217,8 +217,8 @@ async def handle_call_tool(
             if result.get('success'):
                 if 'data' in result:
                     data = result['data']
-                    output = f"✅ Query ejecutada desde: {file_path}\n"
-                    output += f"📊 Filas retornadas: {len(data)}\n\n"
+                    output = f"Query ejecutada desde: {file_path}\n"
+                    output += f"Filas retornadas: {len(data)}\n\n"
 
                     if len(data) > 0:
                         rows_to_show = data[:100]
@@ -230,12 +230,12 @@ async def handle_call_tool(
                     else:
                         output += "No se encontraron resultados"
                 else:
-                    output = f"✅ {result.get('message', 'Query ejecutada')}"
+                    output = f"{result.get('message', 'Query ejecutada')}"
             else:
-                output = f"❌ Error: {result.get('error', 'Error desconocido')}"
+                output = f"Error: {result.get('error', 'Error desconocido')}"
 
         except Exception as e:
-            output = f"❌ Error: {str(e)}"
+            output = f"Error: {str(e)}"
 
         return [types.TextContent(type="text", text=output)]
 
@@ -252,14 +252,14 @@ async def handle_call_tool(
                 search_dir = queries_dir
 
             if not search_dir.exists():
-                output = f"❌ La carpeta '{folder}' no existe"
+                output = f"La carpeta '{folder}' no existe"
             else:
                 sql_files = []
                 for sql_file in search_dir.rglob("*.sql"):
                     rel_path = sql_file.relative_to(queries_dir)
                     sql_files.append(str(rel_path))
 
-                output = f"📁 Archivos .sql encontrados ({len(sql_files)}):\n\n"
+                output = f"Archivos .sql encontrados ({len(sql_files)}):\n\n"
 
                 # Agrupar por carpeta
                 by_folder = {}
@@ -270,12 +270,12 @@ async def handle_call_tool(
                     by_folder[folder_name].append(Path(f).name)
 
                 for folder_name, files in sorted(by_folder.items()):
-                    output += f"\n📂 {folder_name}:\n"
+                    output += f"\n{folder_name}:\n"
                     for file in files:
                         output += f"  - {file}\n"
 
         except Exception as e:
-            output = f"❌ Error listando archivos: {str(e)}"
+            output = f"Error listando archivos: {str(e)}"
 
         return [types.TextContent(type="text", text=output)]
 
@@ -289,10 +289,10 @@ async def handle_call_tool(
             logs = result if isinstance(result, list) else result.get('logs', [])
             logs = logs[:limit]  # Limitar cantidad
 
-            output = f"📋 Logs de queries recientes ({len(logs)}):\n\n"
+            output = f"Logs de queries recientes ({len(logs)}):\n\n"
             output += json.dumps(logs, indent=2, default=str, ensure_ascii=False)
         else:
-            output = f"❌ Error: {result.get('error', 'Error desconocido')}"
+            output = f"Error: {result.get('error', 'Error desconocido')}"
 
         return [types.TextContent(type="text", text=output)]
 
@@ -308,7 +308,7 @@ async def handle_call_tool(
                     "ruta": f"queries/Reportes Contables/{sql_file.name}"
                 })
 
-            output = "📋 Reportes Contables Disponibles:\n\n"
+            output = "Reportes Contables Disponibles:\n\n"
 
             descriptions = {
                 "01_proyectos_licitaciones.sql": "Proyectos y licitaciones Kaiken Lab",
@@ -326,7 +326,7 @@ async def handle_call_tool(
                 output += f"  Ruta: {report['ruta']}\n\n"
 
         except Exception as e:
-            output = f"❌ Error: {str(e)}"
+            output = f"Error: {str(e)}"
 
         return [types.TextContent(type="text", text=output)]
 
@@ -337,31 +337,31 @@ async def handle_call_tool(
         result = await call_django_api("query-database/", method='POST', data={"query": query})
 
         if result.get('success'):
-            output = f"✅ Consulta procesada exitosamente\n\n"
+            output = f"Consulta procesada exitosamente\n\n"
 
             # Mostrar la pregunta original
             if 'query' in result:
-                output += f"❓ Pregunta: {result['query']}\n\n"
+                output += f"Pregunta: {result['query']}\n\n"
 
             # Mostrar la respuesta del asistente (campo principal)
             if 'response' in result:
-                output += f"📝 Respuesta:\n{result['response']}\n\n"
+                output += f"Respuesta:\n{result['response']}\n\n"
             else:
                 # Si no hay campo response, mostrar toda la respuesta para debug
-                output += f"⚠️ No se encontró campo 'response' en la respuesta del backend\n"
-                output += f"📋 Respuesta completa:\n{json.dumps(result, indent=2, default=str, ensure_ascii=False)}\n\n"
+                output += f"ADVERTENCIA: No se encontró campo 'response' en la respuesta del backend\n"
+                output += f"Respuesta completa:\n{json.dumps(result, indent=2, default=str, ensure_ascii=False)}\n\n"
 
             # Mostrar información del vector store si está disponible
             if 'vector_store' in result:
                 vs = result['vector_store']
-                output += f"📊 Vector Store: {vs.get('id', 'N/A')} ({vs.get('table_count', 0)} tablas)\n"
+                output += f"Vector Store: {vs.get('id', 'N/A')} ({vs.get('table_count', 0)} tablas)\n"
 
             # Mostrar uso de tokens si está disponible
             if 'usage' in result:
                 usage = result['usage']
-                output += f"💰 Tokens: {usage.get('total_tokens', 0)} (prompt: {usage.get('prompt_tokens', 0)}, completion: {usage.get('completion_tokens', 0)})\n"
+                output += f"Tokens: {usage.get('total_tokens', 0)} (prompt: {usage.get('prompt_tokens', 0)}, completion: {usage.get('completion_tokens', 0)})\n"
         else:
-            output = f"❌ Error: {result.get('error', 'Error desconocido')}"
+            output = f"Error: {result.get('error', 'Error desconocido')}"
 
         return [types.TextContent(type="text", text=output)]
 
@@ -373,14 +373,14 @@ async def main():
     """Punto de entrada principal"""
     # Verificar configuración
     if not DJANGO_API_TOKEN:
-        print("❌ Error: DJANGO_API_TOKEN no configurada en .env")
+        print("Error: DJANGO_API_TOKEN no configurada en .env")
         print("   Configura tu token en el archivo .env")
         return
 
-    print(f"🚀 MCP Server iniciado")
-    print(f"📡 Django API: {DJANGO_API_URL}")
-    print(f"🔐 Token: ✅ Configurado")
-    print(f"📂 Directorio queries: {Path(__file__).parent.parent / 'queries'}")
+    print(f"MCP Server iniciado")
+    print(f"Django API: {DJANGO_API_URL}")
+    print(f"Token: Configurado")
+    print(f"Directorio queries: {Path(__file__).parent.parent / 'queries'}")
     print()
 
     async with stdio_server() as (read_stream, write_stream):
