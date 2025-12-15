@@ -24,6 +24,22 @@ Query Builder te permite hacer preguntas sobre la base de datos de KAIKEN en len
 
 > **⚠️ ¿Primera vez usando terminal?** No te preocupes, solo copia y pega los comandos.
 
+### 📦 Instalación de Claude Code
+
+Primero instala Claude Code en tu sistema:
+
+**🍎 Mac:**
+```bash
+brew install --cask claude-code
+```
+
+**🪟 Windows (PowerShell como administrador):**
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+---
+
 ### 🍎 En Mac
 
 **Abrir Terminal:** Presiona `⌘ + Espacio`, escribe "terminal", presiona Enter.
@@ -53,12 +69,12 @@ code .
 ```
 
 **Ahora:**
-1. Instala la extensión "Claude Code" en VSCode (`⌘+Shift+X`, busca "Claude Code")
-2. Obtén tu token de API:
+1. Obtén tu token de API:
    - Ve a [https://lab.kaiken.ai/admin](https://lab.kaiken.ai/admin)
    - Inicia sesión con tu cuenta de Kaiken
    - Copia tu token de autenticación (empieza con `eyJ...`)
-3. Edita el archivo `.env` (abre con `nano .env` o VSCode) y pega tu token
+2. Edita el archivo `.env` (abre con `nano .env` o VSCode) y pega tu token
+3. Inicia Claude Code desde la terminal: `claude`
 4. Verifica que funciona: En Claude, escribe `Ejecuta esta query: SELECT DATABASE();`
 
 ---
@@ -116,12 +132,12 @@ code .
 ```
 
 **Ahora:**
-1. Instala la extensión "Claude Code" en VSCode (`Ctrl+Shift+X`, busca "Claude Code")
-2. Obtén tu token de API:
+1. Obtén tu token de API:
    - Ve a [https://lab.kaiken.ai/admin](https://lab.kaiken.ai/admin)
    - Inicia sesión con tu cuenta de Kaiken
    - Copia tu token de autenticación (empieza con `eyJ...`)
-3. Edita el archivo `.env` (abre con `notepad .env` o VSCode) y pega tu token
+2. Edita el archivo `.env` (abre con `notepad .env` o VSCode) y pega tu token
+3. Inicia Claude Code desde PowerShell: `claude`
 4. Verifica que funciona: En Claude, escribe `Ejecuta esta query: SELECT DATABASE();`
 
 ---
