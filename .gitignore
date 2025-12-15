@@ -16,7 +16,6 @@ __pycache__/
 .env.production
 
 # IDEs
-.vscode/
 .idea/
 *.swp
 *.swo
