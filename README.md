@@ -6,146 +6,576 @@
 
 ## 📖 ¿Qué es esto?
 
-Query Builder te permite hacer preguntas sobre la base de datos de KAIKEN en lenguaje natural, y Claude ejecuta las consultas SQL automáticamente.
+Query Builder te permite hacer preguntas sobre la base de datos de KAIKEN en lenguaje natural. **Claude crea las consultas SQL, las ejecuta a modo de prueba, y te presenta los resultados** para que hagas lo que necesites con ellos (copiar, analizar, exportar, etc.).
 
 **Ejemplo:**
 - Tú: *"Muéstrame 10 clientes"*
-- Claude: Ejecuta `SELECT * FROM client LIMIT 10` y te muestra los resultados
+- Claude:
+  1. Crea la query: `SELECT * FROM client LIMIT 10`
+  2. La ejecuta contra la base de datos
+  3. Te muestra los resultados en un formato fácil de leer
+  4. Tú decides qué hacer con esos datos
 
-**No necesitas saber SQL** - Claude se encarga de todo.
+**No necesitas saber SQL** - Claude se encarga de escribir y ejecutar las consultas por ti.
 
 ---
 
-## 🎯 Instalación Rápida (5 minutos)
+## 🎯 Instalación Rápida (15 minutos)
 
-### Requisitos Previos
+> **⚠️ ¿Primera vez usando terminal?** No te preocupes, te guiaremos paso a paso.
 
-Antes de empezar, necesitas tener instalado:
+---
 
-#### 1. **Python 3.10 o superior**
+## 📋 Paso 1: Preparar tu Computadora
 
-Verifica si lo tienes:
+### 1.1 Abrir el Terminal
+
+<details>
+<summary><b>🍎 Si tienes Mac</b></summary>
+
+Hay 3 formas de abrir el Terminal:
+
+**Opción A - Spotlight (más rápido):**
+1. Presiona `⌘ + Espacio`
+2. Escribe "terminal"
+3. Presiona Enter
+
+**Opción B - Launchpad:**
+1. Abre Launchpad (icono del cohete en el Dock)
+2. Busca "Terminal" en la carpeta "Otros"
+3. Haz clic en Terminal
+
+**Opción C - Finder:**
+1. Abre Finder
+2. Ve a: Aplicaciones → Utilidades → Terminal
+3. Haz doble clic en Terminal
+
+✅ **Verificación:** Se abre una ventana negra o blanca con texto.
+
+</details>
+
+<details>
+<summary><b>🪟 Si tienes Windows</b></summary>
+
+Hay 3 formas de abrir PowerShell:
+
+**Opción A - Búsqueda (más rápido):**
+1. Presiona la tecla `Windows` (⊞)
+2. Escribe "powershell"
+3. Haz clic en "Windows PowerShell"
+
+**Opción B - Menú Inicio:**
+1. Haz clic derecho en el botón de Inicio
+2. Selecciona "Windows PowerShell" o "Terminal"
+
+**Opción C - Ejecutar:**
+1. Presiona `Windows + R`
+2. Escribe "powershell"
+3. Presiona Enter
+
+✅ **Verificación:** Se abre una ventana azul con texto.
+
+</details>
+
+---
+
+### 1.2 Instalar Git (si no lo tienes)
+
+Git es necesario para descargar el código del proyecto. Vamos a verificar si ya lo tienes instalado.
+
+<details>
+<summary><b>🍎 En Mac</b></summary>
+
+**Verificar si ya tienes Git:**
+```bash
+git --version
+```
+
+**✅ Si ves algo como "git version 2.x.x":** Ya lo tienes instalado, puedes saltar al siguiente paso.
+
+**❌ Si dice "comando no encontrado":** Necesitas instalarlo.
+
+**Para instalar Git:**
+
+**Opción A - Xcode Command Line Tools (recomendado):**
+```bash
+xcode-select --install
+```
+
+Se abrirá una ventana emergente:
+1. Haz clic en "Instalar"
+2. Acepta los términos
+3. Espera a que termine (puede tomar 5-10 minutos)
+4. Cuando termine, verifica: `git --version`
+
+**Opción B - Con Homebrew:**
+```bash
+brew install git
+```
+
+</details>
+
+<details>
+<summary><b>🪟 En Windows</b></summary>
+
+**Verificar si ya tienes Git:**
+```powershell
+git --version
+```
+
+**✅ Si ves algo como "git version 2.x.x":** Ya lo tienes instalado, puedes saltar al siguiente paso.
+
+**❌ Si dice "comando no encontrado":** Necesitas instalarlo.
+
+**Para instalar Git:**
+
+1. Ve a [git-scm.com/download/win](https://git-scm.com/download/win)
+2. La descarga debería empezar automáticamente
+3. Ejecuta el instalador descargado (`Git-2.x.x-64-bit.exe`)
+4. En la instalación:
+   - Haz clic en "Next" en todas las pantallas (las opciones por defecto están bien)
+   - Asegúrate de que "Git from the command line and also from 3rd-party software" esté seleccionado
+5. Haz clic en "Install"
+6. Espera a que termine
+7. **Importante:** Cierra PowerShell y ábrelo de nuevo
+8. Verifica la instalación: `git --version`
+
+</details>
+
+✅ **Verificación:** El comando `git --version` debe mostrar una versión de Git instalada.
+
+---
+
+### 1.3 Crear una Carpeta para Proyectos
+
+Vamos a crear una carpeta llamada "dev" donde guardaremos el proyecto.
+
+<details>
+<summary><b>🍎 En Mac</b></summary>
+
+Copia y pega estos comandos en el Terminal (presiona Enter después de cada uno):
+
+```bash
+# Ir a tu carpeta de usuario
+cd ~
+
+# Crear carpeta "dev"
+mkdir dev
+
+# Entrar a la carpeta
+cd dev
+```
+
+✅ **Verificación:** Escribe `pwd` y presiona Enter. Deberías ver algo como: `/Users/TuNombre/dev`
+
+</details>
+
+<details>
+<summary><b>🪟 En Windows</b></summary>
+
+Copia y pega estos comandos en PowerShell (presiona Enter después de cada uno):
+
+```powershell
+# Ir a tu carpeta de usuario
+cd ~
+
+# Crear carpeta "dev"
+mkdir dev
+
+# Entrar a la carpeta
+cd dev
+```
+
+✅ **Verificación:** Escribe `pwd` y presiona Enter. Deberías ver algo como: `C:\Users\TuNombre\dev`
+
+</details>
+
+---
+
+### 1.4 Clonar el Repositorio
+
+Ahora vamos a descargar el código del proyecto desde GitHub.
+
+<details>
+<summary><b>🍎 En Mac</b></summary>
+
+```bash
+# Clonar el repositorio
+git clone git@github.com:tomasleblancu/kaiken-query-builder-mcp.git
+
+# Entrar a la carpeta del proyecto
+cd kaiken-query-builder-mcp
+```
+
+</details>
+
+<details>
+<summary><b>🪟 En Windows</b></summary>
+
+```powershell
+# Clonar el repositorio
+git clone git@github.com:tomasleblancu/kaiken-query-builder-mcp.git
+
+# Entrar a la carpeta del proyecto
+cd kaiken-query-builder-mcp
+```
+
+</details>
+
+✅ **Verificación:** Escribe `ls` (Mac) o `dir` (Windows). Deberías ver carpetas como `mcp`, `docs`, `queries`.
+
+---
+
+## 📦 Paso 2: Instalar Requisitos
+
+### 2.1 Instalar Python 3.10 o superior
+
+<details>
+<summary><b>🍎 En Mac</b></summary>
+
+**Verificar si ya lo tienes:**
 ```bash
 python3 --version
 ```
 
-Si no lo tienes, descárgalo desde [python.org](https://www.python.org/downloads/)
+Si ves algo como "Python 3.10.x" o superior, **ya lo tienes instalado ✅**
 
-#### 2. **uv (gestor de paquetes Python)**
+**Si no lo tienes, instálalo:**
 
-Instálalo con:
+Con Homebrew (recomendado):
 ```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# Si no tienes Homebrew, instálalo primero:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Luego instala Python:
+brew install python@3.11
 ```
 
-O si usas macOS con Homebrew:
+O descárgalo desde [python.org](https://www.python.org/downloads/)
+
+</details>
+
+<details>
+<summary><b>🪟 En Windows</b></summary>
+
+**Verificar si ya lo tienes:**
+```powershell
+python --version
+```
+
+Si ves algo como "Python 3.10.x" o superior, **ya lo tienes instalado ✅**
+
+**Si no lo tienes:**
+1. Ve a [python.org/downloads](https://www.python.org/downloads/)
+2. Descarga "Python 3.11" (el botón amarillo grande)
+3. Ejecuta el instalador
+4. ⚠️ **MUY IMPORTANTE:** Marca la casilla "Add Python to PATH"
+5. Haz clic en "Install Now"
+6. Espera a que termine
+7. Reinicia PowerShell
+
+</details>
+
+---
+
+### 2.2 Instalar uv (gestor de paquetes)
+
+<details>
+<summary><b>🍎 En Mac</b></summary>
+
+**Con Homebrew (recomendado):**
 ```bash
 brew install uv
 ```
 
-Verifica la instalación:
+**Sin Homebrew:**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Verificar instalación:**
 ```bash
 uv --version
 ```
 
-#### 3. **Claude Code**
+Deberías ver algo como "uv 0.x.x"
 
-Instálalo desde la extensión de VSCode:
-1. Abre VSCode
-2. Ve a Extensiones (⌘+Shift+X en Mac, Ctrl+Shift+X en Windows)
-3. Busca "Claude Code"
-4. Instala la extensión oficial de Anthropic
+</details>
+
+<details>
+<summary><b>🪟 En Windows</b></summary>
+
+```powershell
+# Instalar uv
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**Verificar instalación:**
+```powershell
+uv --version
+```
+
+Deberías ver algo como "uv 0.x.x"
+
+⚠️ **Si dice "comando no encontrado":**
+1. Cierra PowerShell
+2. Ábrelo de nuevo (como administrador)
+3. Intenta otra vez
+
+</details>
 
 ---
 
-## 🚀 Configuración Paso a Paso
+### 2.3 Instalar Claude Code (VSCode)
 
-### Paso 1: Instalar Dependencias del Proyecto
+1. **Instalar VSCode** (si no lo tienes):
+   - Ve a [code.visualstudio.com](https://code.visualstudio.com/)
+   - Descarga e instala VSCode para tu sistema
 
-Abre una terminal en la carpeta del proyecto y ejecuta:
+2. **Instalar la extensión Claude Code:**
+   - Abre VSCode
+   - Presiona `⌘+Shift+X` (Mac) o `Ctrl+Shift+X` (Windows)
+   - Busca "Claude Code"
+   - Haz clic en "Install" en la extensión de Anthropic
+   - Espera a que se instale
+
+✅ **Verificación:** Deberías ver un ícono de Claude en la barra lateral izquierda de VSCode
+
+---
+
+## 🚀 Paso 3: Configurar el Proyecto
+
+### 3.1 Instalar Dependencias del Proyecto
+
+<details>
+<summary><b>🍎 En Mac</b></summary>
 
 ```bash
+# Asegúrate de estar en la carpeta del proyecto
+cd ~/dev/kaiken-query-builder-mcp
+
+# Entrar a la carpeta mcp
 cd mcp
+
+# Instalar dependencias
 uv sync
 ```
 
-✅ **Verificación:** Deberías ver un mensaje como `Resolved X packages in Xms`
+</details>
+
+<details>
+<summary><b>🪟 En Windows</b></summary>
+
+```powershell
+# Asegúrate de estar en la carpeta del proyecto
+cd ~\dev\kaiken-query-builder-mcp
+
+# Entrar a la carpeta mcp
+cd mcp
+
+# Instalar dependencias
+uv sync
+```
+
+</details>
+
+✅ **Verificación:** Deberías ver mensajes como:
+```
+Resolved X packages in Xms
+Installed X packages in Xms
+```
 
 ---
 
-### Paso 2: Configurar tu Token de API
+### 3.2 Configurar tu Token de API
 
-#### 2.1 Crea tu archivo de configuración
+#### 3.2.1 Crear el archivo de configuración
+
+<details>
+<summary><b>🍎 En Mac</b></summary>
 
 ```bash
-# Regresa a la carpeta raíz del proyecto
-cd ..
+# Regresar a la carpeta raíz del proyecto
+cd ~/dev/kaiken-query-builder-mcp
 
-# Copia el archivo de ejemplo
+# Copiar el archivo de ejemplo
 cp .env.example .env
 ```
 
-#### 2.2 Obtén tu token de API
+</details>
 
-1. Ve a [https://lab.kaiken.ai/admin](https://lab.kaiken.ai/admin)
-2. Inicia sesión con tu cuenta de Kaiken
-3. Ve a tu perfil o configuración de API
-4. Copia tu token de autenticación
+<details>
+<summary><b>🪟 En Windows</b></summary>
 
-#### 2.3 Configura el token
+```powershell
+# Regresar a la carpeta raíz del proyecto
+cd ~\dev\kaiken-query-builder-mcp
 
-Abre el archivo `.env` con tu editor favorito:
+# Copiar el archivo de ejemplo
+copy .env.example .env
+```
 
+</details>
+
+✅ **Verificación:** Escribe `ls .env` (Mac) o `dir .env` (Windows). Deberías ver el archivo `.env` listado.
+
+---
+
+#### 3.2.2 Obtener tu Token de API
+
+1. Abre tu navegador
+2. Ve a [https://lab.kaiken.ai/admin](https://lab.kaiken.ai/admin)
+3. Inicia sesión con tu cuenta de Kaiken
+4. Ve a tu perfil o configuración de API
+5. **Copia tu token de autenticación** (empieza con `eyJ...`)
+
+⚠️ **Importante:** No cierres esta página todavía, necesitarás pegar el token en el siguiente paso.
+
+---
+
+#### 3.2.3 Editar el archivo .env con tu Token
+
+<details>
+<summary><b>🍎 En Mac</b></summary>
+
+**Opción A - Con nano (más fácil):**
 ```bash
 nano .env
 ```
 
-Cambia esta línea:
-```
-DJANGO_API_TOKEN=tu-token-aqui
+1. Busca la línea que dice: `DJANGO_API_TOKEN=tu-token-aqui`
+2. Borra `tu-token-aqui`
+3. Pega tu token real (el que copiaste)
+4. Guarda: Presiona `Ctrl+O`, luego `Enter`
+5. Salir: Presiona `Ctrl+X`
+
+**Opción B - Con VSCode (más visual):**
+```bash
+code .env
 ```
 
-Por tu token real:
-```
-DJANGO_API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGc...
+1. Se abre VSCode con el archivo .env
+2. Busca la línea: `DJANGO_API_TOKEN=tu-token-aqui`
+3. Reemplaza `tu-token-aqui` con tu token real
+4. Guarda: Presiona `⌘+S`
+
+</details>
+
+<details>
+<summary><b>🪟 En Windows</b></summary>
+
+**Opción A - Con Notepad:**
+```powershell
+notepad .env
 ```
 
-Guarda el archivo (Ctrl+O, Enter, Ctrl+X en nano)
+1. Busca la línea que dice: `DJANGO_API_TOKEN=tu-token-aqui`
+2. Borra `tu-token-aqui`
+3. Pega tu token real (el que copiaste)
+4. Guarda: `Archivo → Guardar`
+5. Cierra Notepad
 
-✅ **Verificación:** Tu archivo `.env` debe tener tu token real
+**Opción B - Con VSCode (más visual):**
+```powershell
+code .env
+```
+
+1. Se abre VSCode con el archivo .env
+2. Busca la línea: `DJANGO_API_TOKEN=tu-token-aqui`
+3. Reemplaza `tu-token-aqui` con tu token real
+4. Guarda: Presiona `Ctrl+S`
+
+</details>
+
+**Ejemplo de cómo debería verse:**
+```
+DJANGO_API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMjM0fQ.abc123...
+```
+
+✅ **Verificación:** Tu archivo `.env` debe tener tu token real (una cadena larga de letras y números).
 
 ---
 
-### Paso 3: Iniciar Claude Code
+## 🎮 Paso 4: Iniciar Claude Code
 
-#### 3.1 Abre el proyecto en VSCode
+### 4.1 Abrir el proyecto en VSCode
+
+<details>
+<summary><b>🍎 En Mac</b></summary>
 
 ```bash
-# Abre VSCode en la carpeta del proyecto
+# Asegúrate de estar en la carpeta del proyecto
+cd ~/dev/kaiken-query-builder-mcp
+
+# Abrir VSCode en esta carpeta
 code .
 ```
 
-#### 3.2 Activa Claude Code
+</details>
 
-1. Presiona `Cmd+Shift+P` (Mac) o `Ctrl+Shift+P` (Windows)
-2. Escribe "Claude Code"
-3. Selecciona "Claude Code: Start Chat"
+<details>
+<summary><b>🪟 En Windows</b></summary>
 
-O simplemente haz clic en el ícono de Claude en la barra lateral de VSCode.
+```powershell
+# Asegúrate de estar en la carpeta del proyecto
+cd ~\dev\kaiken-query-builder-mcp
 
-✅ **Verificación:** Deberías ver la interfaz de chat de Claude
+# Abrir VSCode en esta carpeta
+code .
+```
+
+</details>
+
+⚠️ **Si dice "comando 'code' no encontrado":**
+1. Abre VSCode manualmente desde el menú de aplicaciones
+2. Ve a `Archivo → Abrir Carpeta` (o `File → Open Folder`)
+3. Busca y selecciona la carpeta `kaiken-query-builder-mcp`
+4. Haz clic en "Abrir"
+
+✅ **Verificación:** VSCode se abre mostrando las carpetas del proyecto en la barra lateral izquierda.
 
 ---
 
-### Paso 4: Verificar que Todo Funciona
+### 4.2 Activar Claude Code
 
-Escribe esto en el chat de Claude:
+**Hay 2 formas de iniciar Claude:**
+
+**Opción A - Con el menú de comandos:**
+1. Presiona `⌘+Shift+P` (Mac) o `Ctrl+Shift+P` (Windows)
+2. Escribe "Claude"
+3. Selecciona "Claude Code: Start Chat"
+4. Presiona Enter
+
+**Opción B - Con el ícono (más fácil):**
+1. Busca el ícono de Claude en la barra lateral izquierda
+2. Haz clic en él
+3. La interfaz de chat de Claude se abre
+
+✅ **Verificación:** Deberías ver una ventana de chat con el logo de Claude y un campo para escribir mensajes.
+
+---
+
+### 4.3 Verificar que Todo Funciona
+
+**¡Momento de la verdad!** Vamos a probar que todo está configurado correctamente.
+
+En el chat de Claude, escribe exactamente esto:
 
 ```
 Ejecuta esta query: SELECT DATABASE();
 ```
 
-Si ves un resultado como `KAIKEN_APP`, **¡todo está funcionando correctamente!** 🎉
+Presiona Enter y espera unos segundos.
+
+**✅ Si todo funciona correctamente, verás:**
+- Un mensaje de Claude diciendo que está ejecutando la query
+- Un resultado que muestra: `KAIKEN_APP`
+
+**🎉 ¡Felicidades! Tu Query Builder está funcionando correctamente.**
+
+**❌ Si ves un error:**
+- Ve a la sección [Solución de Problemas](#️-solución-de-problemas)
+- O pregúntale directamente a Claude: *"¿Por qué no funciona?"*
 
 ---
 
