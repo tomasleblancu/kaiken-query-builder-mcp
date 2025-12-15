@@ -45,6 +45,3 @@ htmlcov/
 dist/
 build/
 *.egg-info/
-
-# MCP Server directory (managed separately)
-mcp/
