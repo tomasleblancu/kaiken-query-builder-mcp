@@ -1,10 +1,10 @@
 {
   "files.exclude": {
-    "mcp/": true,
-    ".claude/": true,
-    "docs/": true,
-    ".gitignore": true,
-    ".mcp.json": true,
-    "CLAUDE.md": true
+    // "mcp/": true,
+    // ".claude/": true,
+    // "docs/": true,
+    // ".gitignore": true,
+    // ".mcp.json": true,
+    // "CLAUDE.md": true
   }
 }

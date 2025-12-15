@@ -24,22 +24,6 @@ Query Builder te permite hacer preguntas sobre la base de datos de KAIKEN en len
 
 > **⚠️ ¿Primera vez usando terminal?** No te preocupes, solo copia y pega los comandos.
 
-### 📦 Instalación de Claude Code
-
-Primero instala Claude Code en tu sistema:
-
-**🍎 Mac:**
-```bash
-brew install --cask claude-code
-```
-
-**🪟 Windows (PowerShell como administrador):**
-```powershell
-irm https://claude.ai/install.ps1 | iex
-```
-
----
-
 ### 🍎 En Mac
 
 **Abrir Terminal:** Presiona `⌘ + Espacio`, escribe "terminal", presiona Enter.
@@ -50,7 +34,8 @@ irm https://claude.ai/install.ps1 | iex
 # 1. Instalar Homebrew (si no lo tienes)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# 2. Instalar Git, Python, uv y VSCode de una vez
+# 2. Instalar Claude Code, Git, Python, uv y VSCode de una vez
+brew install --cask claude-code
 brew install git python@3.11 uv visual-studio-code
 
 # 3. Crear carpeta dev y clonar el repositorio
@@ -91,7 +76,8 @@ code .
 # Verificar que Winget está instalado (viene con Windows 10/11)
 winget --version
 
-# Instalar Git, Python, uv y VSCode
+# Instalar Claude Code, Git, Python, uv y VSCode
+winget install --id Anthropic.ClaudeCode -e
 winget install --id Git.Git -e
 winget install --id Python.Python.3.11 -e
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
@@ -152,6 +138,7 @@ Si prefieres usar Chocolatey en lugar de Winget:
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 # 2. Instalar todo
+winget install --id Anthropic.ClaudeCode -e
 choco install git python311 vscode -y
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
@@ -319,6 +306,57 @@ La base de datos tiene **275 tablas**. Cada tabla está documentada en [`docs/ta
 1. Verifica que el archivo `.env` existe y tiene tu token
 2. Cierra y vuelve a abrir VSCode
 3. Verifica que `.mcp.json` existe en la raíz del proyecto
+
+---
+
+### 🪟 Problema en Windows: MCP Server no encuentra el .env
+
+**Causa:** El archivo `.env` existe pero no se carga correctamente en Windows.
+
+**Diagnóstico:**
+
+Ejecuta este script desde PowerShell en la carpeta del proyecto:
+
+```powershell
+cd mcp
+python test_env.py
+```
+
+**Soluciones comunes:**
+
+1. **Verificar codificación del archivo:**
+   ```powershell
+   # El .env debe estar en UTF-8 sin BOM
+   # Si usas Notepad, al guardar selecciona "UTF-8" (no "UTF-8 with BOM")
+   ```
+
+2. **Recrear el archivo .env:**
+   ```powershell
+   # Desde la raíz del proyecto
+   Remove-Item .env -ErrorAction SilentlyContinue
+   Copy-Item .env.example .env
+   notepad .env
+   ```
+   Pega tu token y guarda como "UTF-8" (sin BOM)
+
+3. **Verificar que no haya espacios al inicio:**
+   ```
+   # ❌ Incorrecto
+    DJANGO_API_TOKEN=eyJ...
+
+   # ✅ Correcto
+   DJANGO_API_TOKEN=eyJ...
+   ```
+
+4. **Usar comillas si el token tiene caracteres especiales:**
+   ```
+   DJANGO_API_TOKEN="eyJ0eXAiOiJKV1QiLCJhbGc..."
+   ```
+
+5. **Reiniciar Claude Code completamente:**
+   ```powershell
+   # Cerrar Claude Code y volverlo a abrir
+   ```
 
 ---
 
