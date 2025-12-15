@@ -20,13 +20,121 @@ Query Builder te permite hacer preguntas sobre la base de datos de KAIKEN en len
 
 ---
 
-## 🎯 Instalación Rápida (15 minutos)
+## 🎯 Instalación
 
 > **⚠️ ¿Primera vez usando terminal?** No te preocupes, te guiaremos paso a paso.
 
+Elige tu método de instalación:
+
+- **[⚡ Instalación Rápida (5 minutos)](#-instalación-rápida-con-comandos)** - Todo con comandos (recomendado)
+- **[📋 Instalación Paso a Paso (15 minutos)](#-instalación-paso-a-paso)** - Explicación detallada de cada paso
+
 ---
 
-## 📋 Paso 1: Preparar tu Computadora
+## ⚡ Instalación Rápida (con comandos)
+
+**La forma más rápida de instalar todo lo necesario.**
+
+### 🍎 En Mac
+
+Abre el Terminal ([¿Cómo?](#11-abrir-el-terminal)) y ejecuta estos comandos:
+
+```bash
+# 1. Instalar Homebrew (si no lo tienes)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 2. Instalar Git, Python, uv y VSCode de una vez
+brew install git python@3.11 uv visual-studio-code
+
+# 3. Crear carpeta dev y clonar el repositorio
+cd ~ && mkdir -p dev && cd dev
+git clone git@github.com:tomasleblancu/kaiken-query-builder-mcp.git
+cd kaiken-query-builder-mcp
+
+# 4. Instalar dependencias del proyecto
+cd mcp && uv sync && cd ..
+
+# 5. Crear archivo de configuración
+cp .env.example .env
+
+# 6. Abrir VSCode
+code .
+```
+
+**Ahora:**
+1. Instala la extensión "Claude Code" en VSCode (`⌘+Shift+X`, busca "Claude Code")
+2. Edita el archivo `.env` y pega tu token de API ([¿Cómo obtenerlo?](#322-obtener-tu-token-de-api))
+3. [Verifica que funciona](#43-verificar-que-todo-funciona)
+
+---
+
+### 🪟 En Windows
+
+Abre PowerShell **como Administrador** ([¿Cómo?](#11-abrir-el-terminal)) y ejecuta estos comandos:
+
+```powershell
+# 1. Verificar que Winget está instalado (viene con Windows 10/11)
+winget --version
+
+# Si no lo tienes, actualiza Windows o descárgalo desde Microsoft Store
+
+# 2. Instalar Git, Python, uv y VSCode de una vez
+winget install --id Git.Git -e
+winget install --id Python.Python.3.11 -e
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+winget install --id Microsoft.VisualStudioCode -e
+
+# 3. IMPORTANTE: Cerrar y volver a abrir PowerShell para que los comandos funcionen
+
+# 4. Crear carpeta dev y clonar el repositorio
+cd ~ ; mkdir dev ; cd dev
+git clone git@github.com:tomasleblancu/kaiken-query-builder-mcp.git
+cd kaiken-query-builder-mcp
+
+# 5. Instalar dependencias del proyecto
+cd mcp ; uv sync ; cd ..
+
+# 6. Crear archivo de configuración
+copy .env.example .env
+
+# 7. Abrir VSCode
+code .
+```
+
+**Ahora:**
+1. Instala la extensión "Claude Code" en VSCode (`Ctrl+Shift+X`, busca "Claude Code")
+2. Edita el archivo `.env` y pega tu token de API ([¿Cómo obtenerlo?](#322-obtener-tu-token-de-api))
+3. [Verifica que funciona](#43-verificar-que-todo-funciona)
+
+---
+
+<details>
+<summary><b>🪟 Alternativa: Usando Chocolatey en Windows</b></summary>
+
+Si prefieres usar Chocolatey en lugar de Winget:
+
+```powershell
+# 1. Instalar Chocolatey (si no lo tienes)
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+# 2. Instalar todo
+choco install git python311 vscode -y
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# 3. Cerrar y volver a abrir PowerShell
+
+# 4-7. Seguir los pasos 4-7 de la instalación con Winget (arriba)
+```
+
+</details>
+
+---
+
+## 📋 Instalación Paso a Paso
+
+**Si prefieres entender cada paso o si la instalación rápida no funcionó.**
+
+### Paso 1: Preparar tu Computadora
 
 ### 1.1 Abrir el Terminal
 
