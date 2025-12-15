@@ -67,34 +67,44 @@ code .
 
 **Abrir PowerShell:** Presiona la tecla `Windows`, escribe "powershell", clic derecho, "Ejecutar como administrador".
 
-**Luego ejecuta estos comandos:**
+---
+
+**PASO 1: Instalar herramientas** (copia estos comandos):
 
 ```powershell
-# 1. Verificar que Winget está instalado (viene con Windows 10/11)
+# Verificar que Winget está instalado (viene con Windows 10/11)
 winget --version
 
-# Si no lo tienes, actualiza Windows o descárgalo desde Microsoft Store
-
-# 2. Instalar Git, Python, uv y VSCode de una vez
+# Instalar Git, Python, uv y VSCode
 winget install --id Git.Git -e
 winget install --id Python.Python.3.11 -e
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 winget install --id Microsoft.VisualStudioCode -e
+```
 
-# 3. IMPORTANTE: Cerrar y volver a abrir PowerShell para que los comandos funcionen
+⚠️ **IMPORTANTE: Ahora CIERRA PowerShell completamente y ábrelo de nuevo como administrador** ⚠️
 
-# 4. Crear carpeta dev y clonar el repositorio
-cd ~ ; mkdir -Force dev ; cd dev
+---
+
+**PASO 2: Clonar y configurar** (copia estos comandos en el PowerShell nuevo):
+
+```powershell
+# Crear carpeta dev y clonar el repositorio
+cd ~
+if (-not (Test-Path dev)) { mkdir dev }
+cd dev
 git clone git@github.com:tomasleblancu/kaiken-query-builder-mcp.git
 cd kaiken-query-builder-mcp
 
-# 5. Instalar dependencias del proyecto
-cd mcp ; uv sync ; cd ..
+# Instalar dependencias del proyecto
+cd mcp
+uv sync
+cd ..
 
-# 6. Crear archivo de configuración
+# Crear archivo de configuración
 copy .env.example .env
 
-# 7. Abrir VSCode
+# Abrir VSCode
 code .
 ```
 
