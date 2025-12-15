@@ -327,34 +327,23 @@ python test_env.py
 
 **Soluciones:**
 
-**1. Reinstalar dependencias (IMPORTANTE):**
+**1. Reinstalar dependencias (IMPORTANTE - Esto resuelve el 90% de los casos):**
    ```powershell
    # Desde la raíz del proyecto
    cd mcp
    uv sync
    cd ..
+
+   # Reiniciar Claude Code completamente
    ```
 
-**2. Usar configuración alternativa para Windows:**
-   ```powershell
-   # Renombrar el .mcp.json original
-   Rename-Item .mcp.json .mcp.json.backup
-
-   # Usar la configuración de Windows
-   Copy-Item .mcp.windows.json .mcp.json
-
-   # Reiniciar Claude Code
-   ```
-
-**Otras soluciones comunes:**
-
-1. **Verificar codificación del archivo:**
+**2. Verificar codificación del archivo .env:**
    ```powershell
    # El .env debe estar en UTF-8 sin BOM
    # Si usas Notepad, al guardar selecciona "UTF-8" (no "UTF-8 with BOM")
    ```
 
-2. **Recrear el archivo .env:**
+**3. Recrear el archivo .env:**
    ```powershell
    # Desde la raíz del proyecto
    Remove-Item .env -ErrorAction SilentlyContinue
@@ -363,7 +352,7 @@ python test_env.py
    ```
    Pega tu token y guarda como "UTF-8" (sin BOM)
 
-3. **Verificar que no haya espacios al inicio:**
+**4. Verificar que no haya espacios al inicio:**
    ```
    # ❌ Incorrecto
     DJANGO_API_TOKEN=eyJ...
@@ -372,14 +361,9 @@ python test_env.py
    DJANGO_API_TOKEN=eyJ...
    ```
 
-4. **Usar comillas si el token tiene caracteres especiales:**
+**5. Usar comillas si el token tiene caracteres especiales:**
    ```
    DJANGO_API_TOKEN="eyJ0eXAiOiJKV1QiLCJhbGc..."
-   ```
-
-5. **Reiniciar Claude Code completamente:**
-   ```powershell
-   # Cerrar Claude Code y volverlo a abrir
    ```
 
 ---
