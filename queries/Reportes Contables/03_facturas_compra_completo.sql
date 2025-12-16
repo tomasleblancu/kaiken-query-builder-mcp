@@ -33,14 +33,20 @@ SELECT
     rec.reconciled_amount AS monto_reconciliado,
     rec.status AS estado_reconciliacion,
 
-    oh.idOcHeader AS id_orden_compra_reconciliada,
-    oh.oc AS numero_oc_reconciliada,
-    oh.codeProject AS codigo_proyecto_oc,
+    -- Prioriza OC de reconciliación formal, sino usa match por campo texto
+    IFNULL(oh.idOcHeader, oh_texto.idOcHeader) AS id_orden_compra_reconciliada,
+    IFNULL(oh.oc, oh_texto.oc) AS numero_oc_reconciliada,
+    IFNULL(oh.codeProject, oh_texto.codeProject) AS codigo_proyecto_oc,
 
-    IFNULL(oh.idSelectedTenders, dd.project_obj_id) AS id_proyecto,
+    -- Estrategia de múltiples niveles para identificar proyecto:
+    -- 1. Proyecto de OC reconciliada formalmente
+    -- 2. Proyecto de OC matcheada por campo texto
+    -- 3. Proyecto directo del documento
+    IFNULL(IFNULL(oh.idSelectedTenders, oh_texto.idSelectedTenders), dd.project_obj_id) AS id_proyecto,
 
     dd.centro_costo,
     dd.proyecto AS codigo_proyecto_texto,
+    dd.orden_compra AS orden_compra_texto,
 
     dd.condiciones_pago,
     dd.fecha_carga,
@@ -56,8 +62,11 @@ SELECT
 
 FROM documents_document dd
 LEFT JOIN provider prov ON dd.provider_id = prov.idProvider
+-- Join 1: Reconciliación formal
 LEFT JOIN reconciliation_invoicepurchaseorderreconciliation rec ON dd.id = rec.document_id
 LEFT JOIN ocHeader oh ON rec.purchase_order_id = oh.idOcHeader
+-- Join 2: Match por campo de texto cuando no hay reconciliación formal
+LEFT JOIN ocHeader oh_texto ON dd.orden_compra = oh_texto.oc AND rec.id IS NULL
 LEFT JOIN documents_document doc_ref ON dd.documento_referencia_id = doc_ref.id
 LEFT JOIN auth_user au ON dd.created_by_id = au.id
 
